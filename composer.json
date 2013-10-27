@@ -1,0 +1,21 @@
+{
+    "name": "peehaa/requestable",
+    "description": "Request that shit",
+    "keywords": ["request", "rest", "test", "debug", "webservice"],
+    "homepage": "https://github.com/PeeHaa/Requestable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pieter Hordijk",
+            "email": "info@pieterhordijk.com",
+            "homepage": "https://pieterhordijk.com",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}
