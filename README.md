@@ -5,6 +5,11 @@ Webservice to easily send HTTP requests.
 
 This service is useful when testing or debugging other webservice. It supports all HTTP verbs and other HTTP options. It currently uses cURL, but I *might* switch to [Artax][artax] at some point. To see the thing in action click [here][demo]. To see a demo of the API click [here][api-demo]
 
+Build status
+------------
+
+[![Build Status](https://travis-ci.org/PeeHaa/Requestable.png?branch=master)](https://travis-ci.org/PeeHaa/Requestable) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/PeeHaa/Requestable/badges/quality-score.png?s=bc65c4a6a698cb399eacae4160e8dbc970ffcf34)](https://scrutinizer-ci.com/g/PeeHaa/Requestable/) [![Code Coverage](https://scrutinizer-ci.com/g/PeeHaa/Requestable/badges/coverage.png?s=c8455a69d302e104080ea4fc0d8b37c514a124d8)](https://scrutinizer-ci.com/g/PeeHaa/Requestable/)
+
 API
 ---
 
