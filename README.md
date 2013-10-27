@@ -9,11 +9,26 @@ It supports all HTTP verbs and other HTTP options. It currently uses cURL, but I
 
 To see the thing in action click [here][demo].
 
+API
+---
+
+This services also provides a public API to make requests. The API is based on simple `GET` requests and the response is in the JSON format. An example of a API request is:
+
+    https://requestable.pieterhordijk.com/api?uri=http%3A%2F%2Fpieterhordijk.com&method=GET
+
+An example response looks like:
+
+    {
+    "headers":"HTTP\/1.1 301 Moved Permanently\r\nServer: nginx\r\nDate: Sun, 27 Oct 2013 20:09:27 GMT\r\nContent-Type: text\/html\r\nContent-Length: 178\r\nConnection: keep-alive\r\nLocation: https:\/\/pieterhordijk.com\/",
+    "body":"<html>\r\n<head><title>301 Moved Permanently<\/title><\/head>\r\n<body bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently<\/h1><\/center>\r\n<hr><center>nginx<\/center>\r\n<\/body>\r\n<\/html>\r\n",
+    "error":null
+    }
+
 Contributors
 ------------
 
-Cleanup and hosting: [Pieter Hordijk (PeeHaa)][peehaa]
-Initial code: [Chris Wright (DaveRandom)][daverandom]
+- Cleanup and hosting: [Pieter Hordijk (PeeHaa)][peehaa]
+- Initial code: [Chris Wright (DaveRandom)][daverandom]
 
 [artax]: https://github.com/rdlowrey/Artax
 [demo]: https://requestable.pieterhordijk.com
