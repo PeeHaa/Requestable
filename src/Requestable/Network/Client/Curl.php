@@ -87,9 +87,7 @@ class Curl implements Client
             throw new CurlException('Making request failed: ' . curl_error($client));
         }
 
-        $headerInfo = curl_getinfo($client, CURLINFO_HEADER_OUT);
-
-        list($header, $body) = preg_split('/\r?\n\r?\n/', curl_exec($client), 2);
+        list($header, $body) = preg_split('/\r?\n\r?\n/', $result, 2);
 
         if (!preg_match('#^HTTP/1\.[01] (\d{3}) ([^\r\n]+)#', $header)) {
             throw new CurlException('The HTTP response was invalid');
@@ -144,7 +142,10 @@ class Curl implements Client
     {
         $headers = [];
         foreach ($this->headers as $name => $vals) {
-            $name = preg_replace_callback('/(?:^|-)[a-z]/', function($match) { return strtoupper($match[0]); }, $name);
+            $name = preg_replace_callback('/(?:^|-)[a-z]/', function ($match) {
+                return strtoupper($match[0]);
+            }, $name);
+
             foreach ($vals as $val) {
                 $headers[] = $name . ': ' . trim($val);
             }
