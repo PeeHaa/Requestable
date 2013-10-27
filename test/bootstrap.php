@@ -39,3 +39,8 @@ spl_autoload_register(function ($class) {
  * Load the project's autoloader
  */
 require_once __DIR__ . '/../src/Requestable/bootstrap.php';
+
+/**
+ * Load PHPUnit
+ */
+require_once __DIR__ . '/../vendor/autoload.php';
