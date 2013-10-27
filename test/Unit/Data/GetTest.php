@@ -136,7 +136,7 @@ class GetTest extends \PHPUnit_Framework_TestCase
      * @covers Requestable\Data\Get::__construct
      * @covers Requestable\Data\Get::getBody
      */
-    public function testRedirectsEnabledTrue()
+    public function testBody()
     {
         $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
         $request->expects($this->once())->method('get')->will($this->returnValue('foo'));
