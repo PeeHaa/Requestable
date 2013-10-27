@@ -79,7 +79,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
 
         try {
             $client->run();
-        } catch(\Requestable\Network\Client\CurlException $e) {
+        } catch (\Requestable\Network\Client\CurlException $e) {
             $exceptionHit = true;
 
             $possibleMessages = [
