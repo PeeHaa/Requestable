@@ -48,7 +48,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
         $request->expects($this->at(0))->method('post')->will($this->returnValue('FOO'));
-        $request->expects($this->at(1))->method('post')->will($this->returnArgument());
+        $request->expects($this->at(1))->method('post')->will($this->returnArgument(0));
 
         $post = new Post($request);
 
@@ -63,7 +63,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
         $request->expects($this->at(0))->method('post')->will($this->returnValue(null));
-        $request->expects($this->at(1))->method('post')->will($this->returnArgument());
+        $request->expects($this->at(1))->method('post')->will($this->returnArgument(0));
 
         $post = new Post($request);
 

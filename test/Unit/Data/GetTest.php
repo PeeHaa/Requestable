@@ -48,7 +48,7 @@ class GetTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
         $request->expects($this->at(0))->method('get')->will($this->returnValue('FOO'));
-        $request->expects($this->at(1))->method('get')->will($this->returnArgument());
+        $request->expects($this->at(1))->method('get')->will($this->returnArgument(0));
 
         $get = new Get($request);
 
@@ -63,7 +63,7 @@ class GetTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
         $request->expects($this->at(0))->method('get')->will($this->returnValue(null));
-        $request->expects($this->at(1))->method('get')->will($this->returnArgument());
+        $request->expects($this->at(1))->method('get')->will($this->returnArgument(0));
 
         $get = new Get($request);
 
