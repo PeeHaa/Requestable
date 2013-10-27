@@ -15,6 +15,7 @@ namespace Requestable;
 use Requestable\Storage\ImmutableArray;
 use Requestable\Network\Http\Request;
 use Requestable\Data\Post;
+use Requestable\Data\Get;
 use Requestable\Network\Client\Curl;
 use Requestable\Network\Client\Exception;
 
@@ -50,6 +51,19 @@ if ($request->post('uri') !== null) {
     require __DIR__ . '/templates/result.phtml';
     $result = ob_get_contents();
     ob_end_clean();
+} elseif ($request->get('uri') !== null) {
+    $requestData = new Get($request);
+    $client      = new Curl($requestData);
+
+    try {
+        $requestInfo = $client->run();
+    } catch(Exception $e) {
+        $error = $e->getMessage();
+    }
+
+    header('Content-Type: application/json');
+    require __DIR__ . '/templates/result.pjson';
+    exit;
 }
 
 /**

@@ -88,6 +88,7 @@ class Curl implements Client
         }
 
         $headerInfo = curl_getinfo($client, CURLINFO_HEADER_OUT);
+
         list($header, $body) = preg_split('/\r?\n\r?\n/', curl_exec($client), 2);
 
         if (!preg_match('#^HTTP/1\.[01] (\d{3}) ([^\r\n]+)#', $header)) {
