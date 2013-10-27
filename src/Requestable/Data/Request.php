@@ -1,59 +1,59 @@
 <?php
-
+/**
+ * Interface for form data parsers
+ *
+ * PHP version 5.4
+ *
+ * @category   Requestable
+ * @package    Data
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @copyright  Copyright (c) 2013 Pieter Hordijk
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0.0
+ */
 namespace Requestable\Data;
 
-use Requestable\Network\Http\RequestData;
-
-class Request
+/**
+ * Interface for form data parsers
+ *
+ * @category   Requestable
+ * @package    Data
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ */
+interface Request
 {
-    private $request;
+    /**
+     * Gets the URI supplied by the user
+     *
+     * @return string The URI supplied by the user
+     */
+    public function getUri();
 
-    public function __construct(RequestData $request)
-    {
-        $this->request = $request;
-    }
+    /**
+     * Gets the method supplied by the user
+     *
+     * @return string The method supplied by the user
+     */
+    public function getMethod();
 
-    public function getUri()
-    {
-        return $this->request->post('uri');
-    }
+    /**
+     * Gets whether redirects needs to be followed
+     *
+     * @return boolean Whether redirects needs to be followed
+     */
+    public function redirectsEnabled();
 
-    public function getMethod()
-    {
-        if ($this->request->post('custommethod')) {
-            return $this->request->post('custommethod');
-        }
+    /**
+     * Gets the headers supplied by the user
+     *
+     * @return array The headers supplied by the user
+     */
+    public function getHeaders();
 
-        return $this->request->post('method');
-    }
-
-    public function redirectsEnabled()
-    {
-        if ($this->request->post('follow')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function getHeaders()
-    {
-        if (!$this->request->post('headers')) {
-            return [];
-        }
-
-        $headers = [];
-        foreach (preg_split('/\r?\n(?![ \t])/', $this->request->post('headers'), -1, PREG_SPLIT_NO_EMPTY) as $header) {
-            list($key, $val) = preg_split('/\s*:\s*/', $header, 2);
-            $headers[strtolower($key)][] = $val;
-        }
-        $headers['connection'] = ['close'];
-
-        return $headers;
-    }
-
-    public function getBody()
-    {
-        return $this->request->post('body');
-    }
+    /**
+     * Gets the body supplied by the user
+     *
+     * @return string The body supplied by the user
+     */
+    public function getBody();
 }
