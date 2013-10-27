@@ -14,7 +14,7 @@ namespace Requestable;
 
 use Requestable\Storage\ImmutableArray;
 use Requestable\Network\Http\Request;
-use Requestable\Data\Request as RequestData;
+use Requestable\Data\Post;
 use Requestable\Network\Client\Curl;
 use Requestable\Network\Client\Exception;
 
@@ -33,8 +33,11 @@ $request = new Request(
     new ImmutableArray($_FILES)
 );
 
+/**
+ * Routing
+ */
 if ($request->post('uri') !== null) {
-    $requestData = new RequestData($request);
+    $requestData = new Post($request);
     $client      = new Curl($requestData);
 
     try {
@@ -49,9 +52,15 @@ if ($request->post('uri') !== null) {
     ob_end_clean();
 }
 
+/**
+ * Load the form template
+ */
 ob_start();
 require __DIR__ . '/templates/form.phtml';
 $content = ob_get_contents();
 ob_end_clean();
 
+/**
+ * Render the response
+ */
 require __DIR__ . '/templates/page.phtml';
