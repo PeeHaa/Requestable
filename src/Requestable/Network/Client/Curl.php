@@ -1,21 +1,61 @@
 <?php
-
+/**
+ * cURL client
+ *
+ * PHP version 5.4
+ *
+ * @category   Requestable
+ * @package    Network
+ * @subpackage Client
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @copyright  Copyright (c) 2013 Pieter Hordijk
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0.0
+ */
 namespace Requestable\Network\Client;
 
 use Requestable\Data\Request;
 
+/**
+ * cURL client
+ *
+ * @category   Requestable
+ * @package    Network
+ * @subpackage Client
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ */
 class Curl implements Client
 {
+    /**
+     * @var string The URI to make the request to
+     */
     private $uri;
 
+    /**
+     * @var string The method of the request to make
+     */
     private $method;
 
+    /**
+     * @var boolean Do we need to automatically follow redirects
+     */
     private $redirects;
 
+    /**
+     * @var array The optional headers of the request to make
+     */
     private $headers = [];
 
+    /**
+     * @var string The body of the request to make
+     */
     private $body;
 
+    /**
+     * Creates instance
+     *
+     * @param \Requestable\Data\Request The form data
+     */
     public function __construct(Request $request)
     {
         $this->uri       = $request->getUri();
@@ -29,6 +69,12 @@ class Curl implements Client
         }
     }
 
+    /**
+     * Makes the request to the external service
+     *
+     * @returns array The headers and body of the response
+     * @throws \Requestable\Network\Client\CurlException When the request failed
+     */
     public function run()
     {
         if (!$client = curl_init($this->uri)) {
@@ -54,6 +100,13 @@ class Curl implements Client
         ];
     }
 
+    /**
+     * Sets the cURL options
+     *
+     * @param resource $client The resource handler of cURL
+     *
+     * @throws \Requestable\Network\Client\CurlException When setting the cURL option failed
+     */
     private function setOptions($client)
     {
         $options = [
@@ -81,6 +134,11 @@ class Curl implements Client
         }
     }
 
+    /**
+     * Gets the headers of the request to make
+     *
+     * @return array The headers
+     */
     private function getHeaders()
     {
         $headers = [];
