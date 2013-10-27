@@ -1,9 +1,12 @@
-<div class="result <?php if (isset($error)) { echo 'error'; } ?>">
-    <?php if (isset($error)) { ?>
-        <p class="error"><?php echo $error; ?></p>
-    <?php } else { ?>
+<?php if (isset($error)) { ?>
+    <div class="result result-bottom error">
+        <p><?php echo $error; ?></p>
+    </div>
+<?php } else { ?>
+    <div class="result">
         <code><pre><?php echo htmlspecialchars($requestInfo['header']); ?></pre></code>
-        <hr>
+    </div>
+    <div class="result result-bottom">
         <code><pre><?php echo htmlspecialchars($requestInfo['body']); ?></pre></code>
-    <?php } ?>
-</div>
+    </div>
+<?php } ?>
