@@ -127,8 +127,8 @@ class GetTest extends \PHPUnit_Framework_TestCase
         $headers = $get->getHeaders();
 
         $this->assertSame(3, count($headers));
-        $this->assertSame('1', $headers['header1']);
-        $this->assertSame('2', $headers['header2']);
+        $this->assertSame(['1'], $headers['header1']);
+        $this->assertSame(['2'], $headers['header2']);
         $this->assertTrue(isset($headers['connection']));
     }
 
