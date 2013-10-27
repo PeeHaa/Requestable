@@ -1,0 +1,9 @@
+<div class="result <?php if (isset($error)) { echo 'error'; } ?>">
+    <?php if (isset($error)) { ?>
+        <p class="error"><?php echo $error; ?></p>
+    <?php } else { ?>
+        <code><pre><?php echo htmlspecialchars($requestInfo['header']); ?></pre></code>
+        <hr>
+        <code><pre><?php echo htmlspecialchars($requestInfo['body']); ?></pre></code>
+    <?php } ?>
+</div>
