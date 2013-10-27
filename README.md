@@ -3,11 +3,7 @@ Requestable
 
 Webservice to easily send HTTP requests.
 
-This service is useful when testing or debugging other webservice.
-
-It supports all HTTP verbs and other HTTP options. It currently uses cURL, but I *might* switch to [Artax][artax] at some point.
-
-To see the thing in action click [here][demo].
+This service is useful when testing or debugging other webservice. It supports all HTTP verbs and other HTTP options. It currently uses cURL, but I *might* switch to [Artax][artax] at some point. To see the thing in action click [here][demo]. To see a demo of the API click [here][api-demo]
 
 API
 ---
@@ -32,5 +28,6 @@ Contributors
 
 [artax]: https://github.com/rdlowrey/Artax
 [demo]: https://requestable.pieterhordijk.com
+[api-demo]: https://requestable.pieterhordijk.com/api?uri=http%3A%2F%2Fpieterhordijk.com&method=GET
 [peehaa]: https://github.com/PeeHaa
 [daverandom]: https://github.com/DaveRandom
