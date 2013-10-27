@@ -1,36 +1,32 @@
-function easeOutBounce(pos) {
-    if ((pos) < (1/2.75)) {
-        return (7.5625*pos*pos);
-    } else if (pos < (2/2.75)) {
-        return (7.5625*(pos-=(1.5/2.75))*pos + 0.75);
-    } else if (pos < (2.5/2.75)) {
-        return (7.5625*(pos-=(2.25/2.75))*pos + 0.9375);
-    } else {
-        return (7.5625*(pos-=(2.625/2.75))*pos + 0.984375);
-    }
-}
-
-function animateScroll() {
-}
-
 (function() {
-    var result = document.querySelector('.result');
+    var animator, total,
+        result = document.querySelector('.result'),
+        durationMS = 1000;
+
     if (result) {
-        var pos = 0;
-        var total = result.offsetTop;
+        total = result.offsetTop;
+        animator = new Animator(result);
 
-        var test = setInterval(function() {
-            pos += 5;
-
-            if (pos > total) {
-                pos = total;
+        animator.registerEasingFunction("bounce", function(pos) {
+            if ((pos) < (1/2.75)) {
+                return (7.5625 * pos * pos);
+            } else if (pos < (2 / 2.75)) {
+                return (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+            } else if (pos < (2.5 / 2.75)) {
+                return (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
+            } else {
+                return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
             }
+        });
 
-            window.scrollTo(0, pos);
-
-            if (pos == total) {
-                clearInterval(test);
-            }
-        }, 1);
+        animator.animate({
+            startValue: window.scrollY,
+            endValue: total,
+            totalTime: durationMS,
+            frameFunc: function(newValue) {
+                window.scroll(window.scrollX, newValue);
+            },
+            easing: "bounce"
+        });
     }
 }());
