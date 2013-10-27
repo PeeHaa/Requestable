@@ -87,6 +87,10 @@ input[type="text"], select, textarea {
     box-sizing: border-box;
 }
 
+select {
+    padding: 0 0 0 12px;
+}
+
 textarea {
     height: 100px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
