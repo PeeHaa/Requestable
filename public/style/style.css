@@ -144,6 +144,10 @@ input[type="submit"]:active {
     background: #fcf2f2;
 }
 
+.result pre {
+    overflow-x: auto;
+}
+
 footer {
     margin-top: 20px;
     margin-bottom: 14px;
