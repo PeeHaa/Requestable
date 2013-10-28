@@ -100,6 +100,34 @@ class PostTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::cookiesEnabled
+     */
+    public function testCookiesEnabledTrue()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue('true'));
+
+        $post = new Post($request);
+
+        $this->assertTrue($post->cookiesEnabled());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::cookiesEnabled
+     */
+    public function testCookiesEnabledFalse()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue(null));
+
+        $post = new Post($request);
+
+        $this->assertFalse($post->cookiesEnabled());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
      * @covers Requestable\Data\Post::getHeaders
      */
     public function testGetHeadersEmpty()

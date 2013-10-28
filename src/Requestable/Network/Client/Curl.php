@@ -42,6 +42,11 @@ class Curl implements Client
     private $redirects;
 
     /**
+     * @var boolean Do we need to store cookies
+     */
+    private $cookies;
+
+    /**
      * @var array The optional headers of the request to make
      */
     private $headers = [];
@@ -61,6 +66,7 @@ class Curl implements Client
         $this->uri       = $request->getUri();
         $this->method    = $request->getMethod();
         $this->redirects = $request->redirectsEnabled();
+        $this->cookies   = $request->cookiesEnabled();
         $this->headers   = $request->getHeaders();
         $this->body      = $request->getBody();
 
@@ -122,6 +128,14 @@ class Curl implements Client
             CURLOPT_FOLLOWLOCATION => $this->redirects,
             CURLOPT_CUSTOMREQUEST  => $this->method,
         ];
+
+        if ($this->cookies) {
+            $cookieJar = tempnam(sys_get_temp_dir(), 'Req');
+
+            $options[CURLOPT_COOKIESESSION] = true;
+            $options[CURLOPT_COOKIEFILE]    = $cookieJar;
+            $options[CURLOPT_COOKIEJAR]     = $cookieJar;
+        }
 
         if ($this->headers) {
             $options[CURLOPT_HTTPHEADER] = $this->getHeaders();

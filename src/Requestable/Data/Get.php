@@ -78,6 +78,20 @@ class Get implements Request
     }
 
     /**
+     * Gets whether cookies are enabled
+     *
+     * @return boolean Whether cookies are enabled
+     */
+    public function cookiesEnabled()
+    {
+        if ($this->request->get('cookies')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Gets the headers supplied by the user
      *
      * @return array The headers supplied by the user

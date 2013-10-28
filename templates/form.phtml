@@ -21,6 +21,10 @@
         <label class="block"><input type="checkbox" name="follow" <?php if ($request->post('follow') === 'true' ) echo 'checked="checked"'; ?> value="true"> Automatically follow redirects?</label>
     </div>
     <div class="form-group">
+        <label>Enable cookies</label>
+        <label class="block"><input type="checkbox" name="cookies" <?php if ($request->post('cookies') === 'true' ) echo 'checked="checked"'; ?> value="true"> Enable cookie storage?</label>
+    </div>
+    <div class="form-group">
         <label>Request headers (1 per line)</label>
         <textarea name="headers" placeholder="Enter the headers of the request separated by a newline"><?php echo $request->post('headers'); ?></textarea>
     </div>

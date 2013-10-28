@@ -44,6 +44,13 @@ interface Request
     public function redirectsEnabled();
 
     /**
+     * Gets whether cookies are enabled
+     *
+     * @return boolean Whether cookies are enabled
+     */
+    public function cookiesEnabled();
+
+    /**
      * Gets the headers supplied by the user
      *
      * @return array The headers supplied by the user

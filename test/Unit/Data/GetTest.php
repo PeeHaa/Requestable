@@ -100,6 +100,34 @@ class GetTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::cookiesEnabled
+     */
+    public function testCookiesEnabledTrue()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue('true'));
+
+        $get = new Get($request);
+
+        $this->assertTrue($get->cookiesEnabled());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::cookiesEnabled
+     */
+    public function testCookiesEnabledFalse()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue(null));
+
+        $get = new Get($request);
+
+        $this->assertFalse($get->cookiesEnabled());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
      * @covers Requestable\Data\Get::getHeaders
      */
     public function testGetHeadersEmpty()

@@ -15,6 +15,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue(null));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue(null));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue(null));
 
@@ -32,6 +33,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue(null));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue(null));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue(null));
 
@@ -49,6 +51,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue(null));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue(null));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue('foo'));
 
@@ -67,6 +70,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue('http'));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue('GET'));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue('foo'));
 
@@ -104,6 +108,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue('http://pieterhordijk.com'));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue('GET'));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue(null));
 
@@ -125,6 +130,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue('http://pieterhordijk.com'));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue('GET'));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue(null));
 
@@ -139,6 +145,28 @@ class CurlTest extends \PHPUnit_Framework_TestCase
      * @covers Requestable\Network\Client\Curl::__construct
      * @covers Requestable\Network\Client\Curl::run
      * @covers Requestable\Network\Client\Curl::setOptions
+     */
+    public function testRunSuccessWithCookies()
+    {
+        $request = $this->getMock('\\Requestable\\Data\\Request');
+        $request->expects($this->once())->method('getUri')->will($this->returnValue('http://pieterhordijk.com'));
+        $request->expects($this->once())->method('getMethod')->will($this->returnValue('GET'));
+        $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(true));
+        $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
+        $request->expects($this->once())->method('getBody')->will($this->returnValue(null));
+
+        $client = new Curl($request);
+
+        $response = $client->run();
+
+        $this->assertSame(1, preg_match('#Location: https://pieterhordijk.com#', $response['headers'][0]));
+    }
+
+    /**
+     * @covers Requestable\Network\Client\Curl::__construct
+     * @covers Requestable\Network\Client\Curl::run
+     * @covers Requestable\Network\Client\Curl::setOptions
      * @covers Requestable\Network\Client\Curl::getHeaders
      */
     public function testRunSuccessWithHeaders()
@@ -147,6 +175,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue('http://pieterhordijk.com'));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue('GET'));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue(['foo' => ['bar']]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue(null));
 
@@ -169,6 +198,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request->expects($this->once())->method('getUri')->will($this->returnValue('http://pieterhordijk.com'));
         $request->expects($this->once())->method('getMethod')->will($this->returnValue('GET'));
         $request->expects($this->once())->method('redirectsEnabled')->will($this->returnValue(false));
+        $request->expects($this->once())->method('cookiesEnabled')->will($this->returnValue(false));
         $request->expects($this->once())->method('getHeaders')->will($this->returnValue([]));
         $request->expects($this->once())->method('getBody')->will($this->returnValue('foo'));
 
