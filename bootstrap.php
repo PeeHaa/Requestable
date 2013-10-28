@@ -35,35 +35,47 @@ $request = new Request(
 );
 
 /**
- * Routing
+ * Parse the request data
  */
 if ($request->post('uri') !== null) {
     $requestData = new Post($request);
-    $client      = new Curl($requestData);
+} elseif ($request->get('uri') !== null) {
+    $requestData = new Get($request);
+}
+
+/**
+ * Fire the request to the webservice
+ */
+if (isset($requestData)) {
+    $client = new Curl($requestData);
 
     try {
         $requestInfo = $client->run();
     } catch(Exception $e) {
         $error = $e->getMessage();
+    }
+}
+
+/**
+ * Get the result
+ */
+if (isset($client)) {
+    if ($request->getPath() === '/api') {
+        header('Content-Type: application/json');
+        require __DIR__ . '/templates/result.pjson';
+        exit;
     }
 
     ob_start();
     require __DIR__ . '/templates/result.phtml';
     $result = ob_get_contents();
     ob_end_clean();
-} elseif ($request->get('uri') !== null) {
-    $requestData = new Get($request);
-    $client      = new Curl($requestData);
 
-    try {
-        $requestInfo = $client->run();
-    } catch(Exception $e) {
-        $error = $e->getMessage();
+    if ($request->isXhr()) {
+        header('Content-Type: application/json');
+        echo json_encode(['result' => $result]);
+        exit;
     }
-
-    header('Content-Type: application/json');
-    require __DIR__ . '/templates/result.pjson';
-    exit;
 }
 
 /**
