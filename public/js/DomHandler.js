@@ -1,10 +1,3 @@
-/**
- * A simple library to eas working with the DOM
- *
- * @author Pieter Hordijk <http://github.com/PeeHaa>
- */
-'use strict';
-
 function DomHandler(domElement) {
     this.domElement = null;
     if (typeof domElement !== 'undefined') {
@@ -93,7 +86,7 @@ DomHandler.prototype.getFormValues = function() {
         if (element.tagName == 'TEXTAREA' || element.tagName == 'SELECT') {
             params[element.name] = element.value;
         } else if (element.tagName == 'INPUT') {
-            if (element.type == 'text' || element.type == 'hidden' || element.type == 'password') {
+            if (element.type == 'text' || element.type == 'url' || element.type == 'hidden' || element.type == 'password') {
                 params[element.name] = element.value;
             } else if (element.type == 'radio' && element.checked) {
                 if (!element.value) {
