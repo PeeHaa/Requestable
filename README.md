@@ -20,9 +20,11 @@ This services also provides a public API to make requests. The API is based on s
 An example response looks like:
 
     {
-    "headers":"HTTP\/1.1 301 Moved Permanently\r\nServer: nginx\r\nDate: Sun, 27 Oct 2013 20:09:27 GMT\r\nContent-Type: text\/html\r\nContent-Length: 178\r\nConnection: keep-alive\r\nLocation: https:\/\/pieterhordijk.com\/",
-    "body":"<html>\r\n<head><title>301 Moved Permanently<\/title><\/head>\r\n<body bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently<\/h1><\/center>\r\n<hr><center>nginx<\/center>\r\n<\/body>\r\n<\/html>\r\n",
-    "error":null
+        "headers": [
+            "HTTP\/1.1 301 Moved Permanently\r\nServer: nginx\r\nDate: Sun, 27 Oct 2013 20:09:27 GMT\r\nContent-Type: text\/html\r\nContent-Length: 178\r\nConnection: keep-alive\r\nLocation: https:\/\/pieterhordijk.com\/"
+        ],
+        "body":"<html>\r\n<head><title>301 Moved Permanently<\/title><\/head>\r\n<body bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently<\/h1><\/center>\r\n<hr><center>nginx<\/center>\r\n<\/body>\r\n<\/html>\r\n",
+        "error":null
     }
 
 Contributors
