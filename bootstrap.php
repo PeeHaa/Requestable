@@ -35,6 +35,25 @@ $request = new Request(
 );
 
 /**
+ * Handle CORS
+ */
+if ($request->server('HTTP_ORIGIN') !== null) {
+    header('Access-Control-Allow-Origin: *');
+}
+
+if ($request->getMethod() === 'OPTIONS') {
+    if ($request->server('HTTP_ACCESS_CONTROL_REQUEST_METHOD')) {
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+    }
+
+    if ($request->server('HTTP_ACCESS_CONTROL_REQUEST_HEADERS')) {
+        header('Access-Control-Allow-Headers: ' . $request->server('HTTP_ACCESS_CONTROL_REQUEST_HEADERS'));
+    }
+
+    exit;
+}
+
+/**
  * Parse the request data
  */
 if ($request->post('uri') !== null) {
