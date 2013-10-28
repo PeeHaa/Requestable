@@ -175,7 +175,7 @@ class Request implements RequestData
      */
     public function isXhr()
     {
-        return $this->serverVariables->get('X-Requested-With') === 'XMLHttpRequest';
+        return $this->serverVariables->get('HTTP_X_REQUESTED_WITH') === 'XMLHttpRequest';
     }
 
     /**
