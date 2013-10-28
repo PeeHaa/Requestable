@@ -30,8 +30,8 @@ An example response looks like:
 Contributors
 ------------
 
-- Cleanup and hosting: [Pieter Hordijk (PeeHaa)][peehaa]
-- Initial code: [Chris Wright (DaveRandom)][daverandom]
+- [Chris Wright (DaveRandom)][daverandom]
+- [Pieter Hordijk (PeeHaa)][peehaa]
 
 [artax]: https://github.com/rdlowrey/Artax
 [demo]: https://requestable.pieterhordijk.com
