@@ -66,7 +66,7 @@ label.block {
     font-weight: normal;
 }
 
-input[type="text"], select, textarea {
+input[type="text"], input[type="url"], select, textarea {
     display: block;
     width: 100%;
     height: 34px;
