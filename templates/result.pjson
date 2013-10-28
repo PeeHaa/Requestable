@@ -9,7 +9,7 @@ $result = [
 if (isset($error)) {
     $result['error'] = $error;
 } else {
-    $result['headers'] = $requestInfo['header'];
+    $result['headers'] = $requestInfo['headers'];
     $result['body']    = $requestInfo['body'];
 }
 

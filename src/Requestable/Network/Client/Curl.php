@@ -83,19 +83,24 @@ class Curl implements Client
 
         $this->setOptions($client);
 
-        if (!$result = curl_exec($client)) {
+        if (!$response = curl_exec($client)) {
             throw new CurlException('Making request failed: ' . curl_error($client));
         }
 
-        list($header, $body) = preg_split('/\r?\n\r?\n/', $result, 2);
+        $responseParts = preg_split('#\r\n\r\n#', $response);
 
-        if (!preg_match('#^HTTP/1\.[01] (\d{3}) ([^\r\n]+)#', $header)) {
-            throw new CurlException('The HTTP response was invalid');
+        $body    = array_pop($responseParts);
+        $headers = $responseParts;
+
+        foreach ($headers as $header) {
+            if (!preg_match('#^HTTP/1\.[01] (\d{3}) ([^\r\n]+)#', $header)) {
+                throw new CurlException('The HTTP response was invalid');
+            }
         }
 
         return [
-            'header' => $header,
-            'body'   => $body,
+            'headers' => $headers,
+            'body'    => $body,
         ];
     }
 

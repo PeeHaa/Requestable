@@ -111,7 +111,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
 
         $response = $client->run();
 
-        $this->assertSame(1, preg_match('#Location: https://pieterhordijk.com#', $response['header']));
+        $this->assertSame(1, preg_match('#Location: https://pieterhordijk.com#', $response['headers'][0]));
     }
 
     /**
@@ -154,7 +154,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
 
         $response = $client->run();
 
-        $this->assertSame(1, preg_match('#Location: https://pieterhordijk.com#', $response['header']));
+        $this->assertSame(1, preg_match('#Location: https://pieterhordijk.com#', $response['headers'][0]));
     }
 
     /**
@@ -176,6 +176,6 @@ class CurlTest extends \PHPUnit_Framework_TestCase
 
         $response = $client->run();
 
-        $this->assertSame(1, preg_match('#Location: https://pieterhordijk.com#', $response['header']));
+        $this->assertSame(1, preg_match('#Location: https://pieterhordijk.com#', $response['headers'][0]));
     }
 }

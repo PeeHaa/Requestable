@@ -3,9 +3,11 @@
         <p><?php echo $error; ?></p>
     </div>
 <?php } else { ?>
-    <div class="result">
-        <code><pre><?php echo htmlspecialchars($requestInfo['header'], ENT_QUOTES | ENT_SUBSTITUTE); ?></pre></code>
-    </div>
+    <?php foreach ($requestInfo['headers'] as $header) { ?>
+        <div class="result">
+            <code><pre><?php echo htmlspecialchars($header, ENT_QUOTES | ENT_SUBSTITUTE); ?></pre></code>
+        </div>
+    <?php } ?>
     <div class="result result-bottom">
         <code><pre><?php echo htmlspecialchars($requestInfo['body'], ENT_QUOTES | ENT_SUBSTITUTE); ?></pre></code>
     </div>
