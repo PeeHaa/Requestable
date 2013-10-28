@@ -27,6 +27,8 @@ An example response looks like:
         "error":null
     }
 
+The API supports CORS so you can easily make requests using Javascript in your applications to the Requestable service.
+
 Contributors
 ------------
 
