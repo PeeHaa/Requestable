@@ -4,9 +4,9 @@
     </div>
 <?php } else { ?>
     <div class="result">
-        <code><pre><?php echo htmlspecialchars($requestInfo['header']); ?></pre></code>
+        <code><pre><?php echo htmlspecialchars($requestInfo['header'], ENT_QUOTES | ENT_IGNORE); ?></pre></code>
     </div>
     <div class="result result-bottom">
-        <code><pre><?php echo htmlspecialchars($requestInfo['body']); ?></pre></code>
+        <code><pre><?php echo htmlspecialchars($requestInfo['body'], ENT_QUOTES | ENT_IGNORE); ?></pre></code>
     </div>
 <?php } ?>
