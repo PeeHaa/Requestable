@@ -95,12 +95,18 @@ class Curl implements Client
 
         $responseParts = preg_split('#\r\n\r\n#', $response);
 
-        $body    = array_pop($responseParts);
-        $headers = $responseParts;
+        if (!preg_match('#^HTTP/1\.[01] (\d{3}) ([^\r\n]+)#', $responseParts[0])) {
+            throw new CurlException('The HTTP response was invalid');
+        }
 
-        foreach ($headers as $header) {
-            if (!preg_match('#^HTTP/1\.[01] (\d{3}) ([^\r\n]+)#', $header)) {
-                throw new CurlException('The HTTP response was invalid');
+        $headers = [];
+        $body = '';
+
+        foreach ($responseParts as $responsePart) {
+            if (preg_match('#^HTTP/1\.[01] (\d{3}) ([^\r\n]+)#', $responsePart)) {
+                $headers[] = $responsePart;
+            } else {
+                $body .= $responsePart;
             }
         }
 
