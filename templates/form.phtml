@@ -10,6 +10,11 @@
             <option value="HEAD" <?php if ($request->post('method') === 'HEAD' ) echo 'selected="selected"'; ?>>HEAD</option>
             <option value="POST" <?php if ($request->post('method') === 'POST' ) echo 'selected="selected"'; ?>>POST</option>
             <option value="PUT" <?php if ($request->post('method') === 'PUT' ) echo 'selected="selected"'; ?>>PUT</option>
+            <option value="DELETE" <?php if ($request->post('method') === 'DELETE' ) echo 'selected="selected"'; ?>>DELETE</option>
+            <option value="TRACE" <?php if ($request->post('method') === 'TRACE' ) echo 'selected="selected"'; ?>>TRACE</option>
+            <option value="OPTIONS" <?php if ($request->post('method') === 'OPTIONS' ) echo 'selected="selected"'; ?>>OPTIONS</option>
+            <option value="CONNECT" <?php if ($request->post('method') === 'CONNECT' ) echo 'selected="selected"'; ?>>CONNECT</option>
+            <option value="PATCH" <?php if ($request->post('method') === 'PATCH' ) echo 'selected="selected"'; ?>>PATCH</option>
         </select>
     </div>
     <div class="form-group">
