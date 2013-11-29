@@ -14,6 +14,9 @@ namespace Requestable;
 
 use Requestable\Storage\ImmutableArray;
 use Requestable\Network\Http\Request;
+use Requestable\Resource\Identifier;
+use Requestable\Resource\Storer;
+use Requestable\Resource\Retriever;
 use Requestable\Data\Post;
 use Requestable\Data\Get;
 use Requestable\Network\Client\Curl;
@@ -54,12 +57,46 @@ if ($request->getMethod() === 'OPTIONS') {
 }
 
 /**
+ * Setup the id converter
+ */
+$identifier = new Identifier();
+
+/**
+ * Setup the database connection
+ */
+$dbConnection = new \PDO(
+    'pgsql:dbname=requestable;host=127.0.0.1',
+    'awesomeuser',
+    'awesomepass',
+    [
+        \PDO::ATTR_EMULATE_PREPARES   => false,
+        \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+    ]
+);
+
+/**
  * Parse the request data
  */
 if ($request->post('uri') !== null) {
     $requestData = new Post($request);
+    $storage     = new Storer($requestData, $dbConnection);
+
+    header('Location: ' . $request->getBaseUrl() . '/' . $identifier->toHash($storage->save()));
+    exit;
 } elseif ($request->get('uri') !== null) {
     $requestData = new Get($request);
+    $storage     = new Storer($requestData, $dbConnection);
+
+    header('Location: ' . $request->getBaseUrl() . '/' . $identifier->toHash($storage->save()));
+    exit;
+} elseif (!in_array($request->getPath(), ['', '/'], true)) {
+    $path  = trim($request->getPath(), '/ ');
+    $parts = explode('/', $path);
+    $hash  = $parts[0];
+
+    $storage     = new Retriever($identifier->toPlain($hash), $dbConnection);
+    $requestData = $storage->getRequest();
 }
 
 /**
@@ -70,7 +107,7 @@ if (isset($requestData)) {
 
     try {
         $requestInfo = $client->run();
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $error = $e->getMessage();
     }
 }
@@ -92,7 +129,11 @@ if (isset($client)) {
 
     if ($request->isXhr()) {
         header('Content-Type: application/json');
-        echo json_encode(['result' => $result]);
+
+        echo json_encode([
+            'result' => $result,
+            'hash'   => $hash,
+        ]);
         exit;
     }
 }
