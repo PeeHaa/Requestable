@@ -4,6 +4,7 @@ $result = [
     'headers' => null,
     'body'    => null,
     'error'   => null,
+    'hash'    => null,
 ];
 
 if (isset($error)) {
@@ -12,5 +13,7 @@ if (isset($error)) {
     $result['headers'] = $requestInfo['headers'];
     $result['body']    = $requestInfo['body'];
 }
+
+$result['hash'] = $hash;
 
 echo json_encode($result);
