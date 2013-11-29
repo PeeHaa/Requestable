@@ -28,6 +28,11 @@ use Requestable\Network\Client\Exception;
 require_once __DIR__ . '/src/Requestable/bootstrap.php';
 
 /**
+ * Load the environment specific settings
+ */
+require_once __DIR__ . '/init.deployment.php';
+
+/**
  * Setup the request object
  */
 $request = new Request(
@@ -65,9 +70,9 @@ $identifier = new Identifier();
  * Setup the database connection
  */
 $dbConnection = new \PDO(
-    'pgsql:dbname=requestable;host=127.0.0.1',
-    'awesomeuser',
-    'awesomepass',
+    $settings['dbDsn'],
+    $settings['dbUser'],
+    $settings['dbPass'],
     [
         \PDO::ATTR_EMULATE_PREPARES   => false,
         \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
