@@ -110,6 +110,8 @@ if (isset($requestData)) {
     } catch(\Exception $e) {
         $error = $e->getMessage();
     }
+} else {
+    $requestData = new Post($request);
 }
 
 /**
