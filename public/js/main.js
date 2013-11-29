@@ -69,6 +69,8 @@
                     content.appendChild(newResults[i]);
                 }
 
+                window.history.pushState({}, '', '/' + data.hash);
+
                 scrollTheThing(document.querySelector('.result'));
             }
         }
