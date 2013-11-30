@@ -54,7 +54,7 @@ class Storage implements Request
      */
     public function getMethod()
     {
-        return $this->recordset[0]['method'];
+        return strtoupper($this->recordset[0]['method']);
     }
 
     /**
@@ -86,7 +86,6 @@ class Storage implements Request
     {
         $headers = [];
 
-        $headers = [];
         foreach ($this->recordset as $record) {
             if ($record['header'] === null) {
                 continue;
