@@ -120,6 +120,7 @@ ALTER SEQUENCE requestheaders_requestid_seq OWNED BY requestheaders.requestid;
 CREATE TABLE requests (
     id bigint NOT NULL,
     uri character varying(255) NOT NULL,
+    version character varying(10) NOT NULL,
     method character varying(128) NOT NULL,
     follow boolean DEFAULT false NOT NULL,
     cookies boolean DEFAULT false NOT NULL,

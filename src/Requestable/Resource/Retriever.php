@@ -53,8 +53,8 @@ class Retriever implements Retrievable
      */
     public function getRequest()
     {
-        $query = 'SELECT requests.id, requests.uri, requests.method, requests.follow, requests.cookies, requests.body,';
-        $query.= ' requestheaders.header';
+        $query = 'SELECT requests.id, requests.uri, requests.version, requests.method, requests.follow,';
+        $query.= ' requests.cookies, requests.body, requestheaders.header';
         $query.= ' FROM requests';
         $query.= ' LEFT JOIN requestheaders ON requestheaders.requestid = requests.id';
         $query.= ' WHERE requests.id = :id';

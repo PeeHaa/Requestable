@@ -32,6 +32,11 @@ class Curl implements Client
     private $uri;
 
     /**
+     * @var string The HTTP version
+     */
+    private $version;
+
+    /**
      * @var string The method of the request to make
      */
     private $method;
@@ -64,6 +69,7 @@ class Curl implements Client
     public function __construct(Request $request)
     {
         $this->uri       = $request->getUri();
+        $this->version   = $request->getVersion();
         $this->method    = $request->getMethod();
         $this->redirects = $request->redirectsEnabled();
         $this->cookies   = $request->cookiesEnabled();
@@ -133,6 +139,7 @@ class Curl implements Client
             CURLINFO_HEADER_OUT    => true,
             CURLOPT_FOLLOWLOCATION => $this->redirects,
             CURLOPT_CUSTOMREQUEST  => $this->method,
+            CURLOPT_HTTP_VERSION   => $this->version === '1.0' ? CURL_HTTP_VERSION_1_0 :  CURL_HTTP_VERSION_1_1,
         ];
 
         if ($this->cookies) {

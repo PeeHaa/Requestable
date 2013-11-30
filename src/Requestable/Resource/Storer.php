@@ -63,12 +63,13 @@ class Storer implements Storable
      */
     private function saveRequest()
     {
-        $query = 'INSERT INTO requests (uri, method, follow, cookies, body)';
-        $query.= ' VALUES (:uri, :method, :follow, :cookies, :body)';
+        $query = 'INSERT INTO requests (uri, version, method, follow, cookies, body)';
+        $query.= ' VALUES (:uri, :version, :method, :follow, :cookies, :body)';
 
         $stmt = $this->dbConnection->prepare($query);
         $stmt->execute([
             'uri'     => $this->request->getUri(),
+            'version' => $this->request->getVersion(),
             'method'  => $this->request->getMethod(),
             'follow'  => $this->request->redirectsEnabled() ? 't' : 'f',
             'cookies' => $this->request->cookiesEnabled() ? 't' : 'f',

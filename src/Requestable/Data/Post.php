@@ -50,6 +50,16 @@ class Post implements Request
     }
 
     /**
+     * Gets the HTTP version supplied by the user
+     *
+     * @return string The HTTP version supplied by the user
+     */
+    public function getVersion()
+    {
+        return $this->request->post('version');
+    }
+
+    /**
      * Gets the method supplied by the user
      *
      * @return string The method supplied by the user

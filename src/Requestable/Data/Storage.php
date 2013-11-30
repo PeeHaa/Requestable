@@ -48,6 +48,16 @@ class Storage implements Request
     }
 
     /**
+     * Gets the URI supplied by the user
+     *
+     * @return string The URI supplied by the user
+     */
+    public function getVersion()
+    {
+        return $this->recordset[0]['version'];
+    }
+
+    /**
      * Gets the method supplied by the user
      *
      * @return string The method supplied by the user

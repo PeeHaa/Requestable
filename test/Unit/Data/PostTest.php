@@ -42,6 +42,20 @@ class PostTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::getVersion
+     */
+    public function testGetVersion()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue('1.0'));
+
+        $post = new Post($request);
+
+        $this->assertSame('1.0', $post->getVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
      * @covers Requestable\Data\Post::getMethod
      */
     public function testGetMethodCustom()

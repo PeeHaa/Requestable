@@ -39,6 +39,17 @@ class StorageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Requestable\Data\Storage::__construct
+     * @covers Requestable\Data\Storage::getVersion
+     */
+    public function testGetVersion()
+    {
+        $storage = new Storage([['version' => '1.0']]);
+
+        $this->assertSame('1.0', $storage->getVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Storage::__construct
      * @covers Requestable\Data\Storage::getMethod
      */
     public function testGetMethodCustom()

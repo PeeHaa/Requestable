@@ -42,6 +42,20 @@ class GetTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::getVersion
+     */
+    public function testGetVersion()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue('1.0'));
+
+        $get = new Get($request);
+
+        $this->assertSame('1.0', $get->getVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
      * @covers Requestable\Data\Get::getMethod
      */
     public function testGetMethodCustom()
