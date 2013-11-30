@@ -52,7 +52,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
 
         $post = new Post($request);
 
-        $this->assertSame('custommethod', $post->getMethod());
+        $this->assertSame('CUSTOMMETHOD', $post->getMethod());
     }
 
     /**
@@ -67,7 +67,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
 
         $post = new Post($request);
 
-        $this->assertSame('method', $post->getMethod());
+        $this->assertSame('METHOD', $post->getMethod());
     }
 
     /**

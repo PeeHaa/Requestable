@@ -57,10 +57,10 @@ class Post implements Request
     public function getMethod()
     {
         if ($this->request->post('custommethod')) {
-            return $this->request->post('custommethod');
+            return strtoupper($this->request->post('custommethod'));
         }
 
-        return $this->request->post('method');
+        return strtoupper($this->request->post('method'));
     }
 
     /**

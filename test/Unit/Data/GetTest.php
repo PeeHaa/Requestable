@@ -52,7 +52,7 @@ class GetTest extends \PHPUnit_Framework_TestCase
 
         $get = new Get($request);
 
-        $this->assertSame('custommethod', $get->getMethod());
+        $this->assertSame('CUSTOMMETHOD', $get->getMethod());
     }
 
     /**
@@ -67,7 +67,7 @@ class GetTest extends \PHPUnit_Framework_TestCase
 
         $get = new Get($request);
 
-        $this->assertSame('method', $get->getMethod());
+        $this->assertSame('METHOD', $get->getMethod());
     }
 
     /**

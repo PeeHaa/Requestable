@@ -57,10 +57,10 @@ class Get implements Request
     public function getMethod()
     {
         if ($this->request->get('custommethod')) {
-            return $this->request->get('custommethod');
+            return strtoupper($this->request->get('custommethod'));
         }
 
-        return $this->request->get('method');
+        return strtoupper($this->request->get('method'));
     }
 
     /**
