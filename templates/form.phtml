@@ -1,10 +1,10 @@
 <?php
-$headers = '';
+$renderedHeaders = '';
 $prefix = '';
 
-foreach ($requestData->getHeaders() as $headers) {
-    foreach ($headers as $key => $value) {
-        $headers .= $prefix . $key . ': ' . $value;
+foreach ($requestData->getHeaders() as $key => $headers) {
+    foreach ($headers as $value) {
+        $renderedHeaders .= $prefix . $key . ': ' . $value;
 
         $prefix = "\r\n";
     }
@@ -62,7 +62,7 @@ if (in_array($requestData->getVersion(), ['1.0', '1.1'])) {
     </div>
     <div class="form-group">
         <label>Request headers (1 per line)</label>
-        <textarea name="headers" placeholder="Enter the headers of the request separated by a newline"><?php echo $headers; ?></textarea>
+        <textarea name="headers" placeholder="Enter the headers of the request separated by a newline"><?php echo $renderedHeaders; ?></textarea>
     </div>
     <div class="form-group">
         <label>Request body</label>
