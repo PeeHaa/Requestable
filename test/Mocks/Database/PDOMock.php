@@ -12,4 +12,9 @@ class PDOMock extends \PDO
     {
         return new PDOStatementMock();
     }
+
+    public function lastInsertId($seqname = null)
+    {
+        return 10;
+    }
 }
