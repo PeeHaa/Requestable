@@ -81,24 +81,32 @@ $dbConnection = new \PDO(
 );
 
 /**
+ * Check if access is through api to prefix the path with the API identifier
+ */
+$apiPrefix = '';
+if ($request->getPath() === '/api') {
+    $apiPrefix = '/api';
+}
+
+/**
  * Parse the request data
  */
 if ($request->post('uri') !== null) {
     $requestData = new Post($request);
     $storage     = new Storer($requestData, $dbConnection);
 
-    header('Location: ' . $request->getBaseUrl() . '/' . $identifier->toHash($storage->save()));
+    header('Location: ' . $request->getBaseUrl() . $apiPrefix .'/' . $identifier->toHash($storage->save()));
     exit;
 } elseif ($request->get('uri') !== null) {
     $requestData = new Get($request);
     $storage     = new Storer($requestData, $dbConnection);
 
-    header('Location: ' . $request->getBaseUrl() . '/' . $identifier->toHash($storage->save()));
+    header('Location: ' . $request->getBaseUrl() . $apiPrefix .'/' . $identifier->toHash($storage->save()));
     exit;
 } elseif (!in_array($request->getPath(), ['', '/'], true)) {
     $path  = trim($request->getPath(), '/ ');
     $parts = explode('/', $path);
-    $hash  = $parts[0];
+    $hash  = strpos($request->getPath(), '/api') === 0 ? $parts[1] : $parts[0];
 
     $storage     = new Retriever($identifier->toPlain($hash), $dbConnection);
     $requestData = $storage->getRequest();
@@ -123,7 +131,7 @@ if (isset($requestData)) {
  * Get the result
  */
 if (isset($client)) {
-    if ($request->getPath() === '/api') {
+    if (strpos($request->getPath(), '/api') === 0) {
         header('Content-Type: application/json');
         require __DIR__ . '/templates/result.pjson';
         exit;
