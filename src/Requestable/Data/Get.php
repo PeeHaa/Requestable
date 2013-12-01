@@ -56,6 +56,10 @@ class Get implements Request
      */
     public function getVersion()
     {
+        if ($this->request->get('version') === null) {
+            return '1.1';
+        }
+
         return $this->request->get('version');
     }
 

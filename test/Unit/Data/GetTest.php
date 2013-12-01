@@ -47,11 +47,26 @@ class GetTest extends \PHPUnit_Framework_TestCase
     public function testGetVersion()
     {
         $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
-        $request->expects($this->once())->method('get')->will($this->returnValue('1.0'));
+        $request->expects($this->at(0))->method('get')->will($this->returnValue('1.0'));
+        $request->expects($this->at(1))->method('get')->will($this->returnValue('1.0'));
 
         $get = new Get($request);
 
         $this->assertSame('1.0', $get->getVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::getVersion
+     */
+    public function testGetVersionDefault()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue(null));
+
+        $get = new Get($request);
+
+        $this->assertSame('1.1', $get->getVersion());
     }
 
     /**

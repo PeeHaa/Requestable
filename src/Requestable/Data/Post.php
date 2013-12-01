@@ -56,6 +56,10 @@ class Post implements Request
      */
     public function getVersion()
     {
+        if ($this->request->post('version') === null) {
+            return '1.1';
+        }
+
         return $this->request->post('version');
     }
 
