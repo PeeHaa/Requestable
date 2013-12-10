@@ -25,7 +25,9 @@ interface Retrievable
     /**
      * Gets the request from the storage
      *
+     * @param int $id The id of the request
+     *
      * @return \Requestable\Data\Storage The request
      */
-    public function getRequest();
+    public function getRequest($id);
 }
