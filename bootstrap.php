@@ -91,7 +91,20 @@ if ($request->getPath() === '/api') {
 /**
  * Parse the request data
  */
-if ($request->post('uri') !== null) {
+if ($request->getPath() === '/about') {
+    ob_start();
+    require __DIR__ . '/templates/about.phtml';
+    $content = ob_get_contents();
+    ob_end_clean();
+} elseif ($request->getPath() === '/recent') {
+    $storage        = new Retriever($dbConnection);
+    $recentRequests = $storage->getRecent(1, 100);
+
+    ob_start();
+    require __DIR__ . '/templates/recent.phtml';
+    $content = ob_get_contents();
+    ob_end_clean();
+} elseif ($request->post('uri') !== null) {
     $requestData = new Post($request);
     $storage     = new Storer($requestData, $dbConnection);
 
@@ -108,8 +121,8 @@ if ($request->post('uri') !== null) {
     $parts = explode('/', $path);
     $hash  = strpos($request->getPath(), '/api') === 0 ? $parts[1] : $parts[0];
 
-    $storage     = new Retriever($identifier->toPlain($hash), $dbConnection);
-    $requestData = $storage->getRequest();
+    $storage     = new Retriever($dbConnection);
+    $requestData = $storage->getRequest($identifier->toPlain($hash));
 }
 
 /**
@@ -153,13 +166,16 @@ if (isset($client)) {
     }
 }
 
+
 /**
  * Load the form template
  */
-ob_start();
-require __DIR__ . '/templates/form.phtml';
-$content = ob_get_contents();
-ob_end_clean();
+if (!isset($content)) {
+    ob_start();
+    require __DIR__ . '/templates/form.phtml';
+    $content = ob_get_contents();
+    ob_end_clean();
+}
 
 /**
  * Render the response
