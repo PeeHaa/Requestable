@@ -54,6 +54,7 @@ class Identifier implements Converter
         }
 
         $result = sprintf('%F', $result);
+
         return (int) substr($result, strlen(self::PREFIX), strpos($result, '.'));
     }
 

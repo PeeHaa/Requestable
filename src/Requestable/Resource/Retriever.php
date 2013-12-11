@@ -66,9 +66,9 @@ class Retriever implements Retrievable
     /**
      * Gets the most recent requests
      *
-     * @param int    $page The page number from where to start the offset
-     * @param int    $size The size of the page (number of items on the page)
-     * @param string $field The field to sort on
+     * @param int    $page      The page number from where to start the offset
+     * @param int    $size      The size of the page (number of items on the page)
+     * @param string $field     The field to sort on
      * @param string $direction The direction to sort on
      *
      * @return array Collection of requests
@@ -99,7 +99,8 @@ class Retriever implements Retrievable
      *
      * @return boolean True when the field is valid
      */
-    private function isFieldValid($field) {
+    private function isFieldValid($field)
+    {
         $validFields = [
             'requests.id',
             'requests.uri',
