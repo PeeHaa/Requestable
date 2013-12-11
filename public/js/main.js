@@ -41,42 +41,56 @@
     }
 
     var form = document.querySelector('form');
-    $(form).on('submit', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    if (form) {
+        $(form).on('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState < 4 || xhr.status !== 200) {
-                return;
-            }
-
-            if (xhr.readyState === 4) {
-                var data = JSON.parse(xhr.responseText);
-
-                var results = document.querySelectorAll('.result');
-                for (var i =0, l = results.length; i < l; i++) {
-                    results[i].parentNode.removeChild(results[i]);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState < 4 || xhr.status !== 200) {
+                    return;
                 }
 
-                var content = document.querySelector('#body .content');
-                var newResults = stringToHtml(data.result);
-                for (var i = 0, l = newResults.length; i < l; i++) {
-                    if (typeof newResults[i] === 'undefined' || newResults[i].nodeType === 3) {
-                        continue;
+                if (xhr.readyState === 4) {
+                    var data = JSON.parse(xhr.responseText);
+
+                    var results = document.querySelectorAll('.result');
+                    for (var i =0, l = results.length; i < l; i++) {
+                        results[i].parentNode.removeChild(results[i]);
                     }
 
-                    content.appendChild(newResults[i]);
+                    var content = document.querySelector('#body .content');
+                    var newResults = stringToHtml(data.result);
+                    for (var i = 0, l = newResults.length; i < l; i++) {
+                        if (typeof newResults[i] === 'undefined' || newResults[i].nodeType === 3) {
+                            continue;
+                        }
+
+                        content.appendChild(newResults[i]);
+                    }
+
+                    window.history.pushState({}, '', '/' + data.hash);
+
+                    scrollTheThing(document.querySelector('.result'));
                 }
-
-                window.history.pushState({}, '', '/' + data.hash);
-
-                scrollTheThing(document.querySelector('.result'));
             }
-        }
-        xhr.open(form.getAttribute('method'), '/', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.send($(form).serialize());
-    });
+            xhr.open(form.getAttribute('method'), '/', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.send($(form).serialize());
+        });
+    }
+
+    var table = document.querySelector('table');
+    if (table) {
+        $(table).on('click', function(e) {
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+
+            if (target.nodeName === "TD") {
+                window.location = target.parentNode.querySelector('td.id a').getAttribute('href');
+            }
+        });
+    }
 }());
