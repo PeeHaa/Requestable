@@ -75,7 +75,9 @@ class Retriever implements Retrievable
      */
     public function getRecent($page, $size = 100, $field = 'requests.id', $direction = 'DESC')
     {
-        if (!$this->isFieldValid($field) || !in_array($direction, ['ASC', 'DESC'], true)) return [];
+        if (!$this->isFieldValid($field) || !in_array($direction, ['ASC', 'DESC'], true)) {
+            return [];
+        }
 
         $query = 'SELECT requests.id, requests.uri, requests.version, requests.method, requests.follow,';
         $query.= ' requests.cookies, requests.body, requestheaders.header';
