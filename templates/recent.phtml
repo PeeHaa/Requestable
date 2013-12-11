@@ -7,28 +7,28 @@ $byteFormatter = new \Requestable\Format\Byte;
     <table>
         <thead>
             <tr>
-                <th>#</th>
+                <th class="id">#</th>
                 <th>URI</th>
-                <th class="right">Version</th>
-                <th>Method</th>
-                <th class="center">Follow</th>
-                <th class="center">Cookies</th>
-                <th class="right">Body</th>
-                <th class="right">Headers</th>
+                <th class="right version">Version</th>
+                <th class="method">Method</th>
+                <th class="center follow">Follow</th>
+                <th class="center cookies">Cookies</th>
+                <th class="right body">Body</th>
+                <th class="right headers">Headers</th>
             </tr>
         </thead>
         <?php if ($recentRequests) { ?>
             <?php foreach ($recentRequests as $id => $storedRequest) { ?>
                 <tbody>
                     <tr>
-                        <td><a href="/<?php echo $identifier->toHash($id); ?>"><?php echo $identifier->toHash($id); ?></a></td>
-                        <td><?php echo htmlspecialchars($storedRequest->getUri()); ?></td>
-                        <td class="right"><?php echo $storedRequest->getVersion(); ?></td>
-                        <td><?php echo $storedRequest->getMethod(); ?></td>
-                        <td class="center"><input type="checkbox" disabled <?php if ($storedRequest->redirectsEnabled()) echo 'checked'; ?>></td>
-                        <td class="center"><input type="checkbox" disabled <?php if ($storedRequest->cookiesEnabled()) echo 'checked'; ?>></td>
-                        <td class="right"><?php echo $byteFormatter->format(strlen($storedRequest->getBody())); ?></td>
-                        <td class="right">N/A</td>
+                        <td class="id"><a href="/<?php echo $identifier->toHash($id); ?>"><?php echo $identifier->toHash($id); ?></a></td>
+                        <td title="<?php echo htmlspecialchars($storedRequest->getUri()); ?>"><?php echo htmlspecialchars($storedRequest->getUri()); ?></td>
+                        <td class="right version"><?php echo $storedRequest->getVersion(); ?></td>
+                        <td class="method"><?php echo $storedRequest->getMethod(); ?></td>
+                        <td class="center follow"><input type="checkbox" disabled <?php if ($storedRequest->redirectsEnabled()) echo 'checked'; ?>></td>
+                        <td class="center cookies"><input type="checkbox" disabled <?php if ($storedRequest->cookiesEnabled()) echo 'checked'; ?>></td>
+                        <td class="right body"><?php echo $byteFormatter->format(strlen($storedRequest->getBody())); ?></td>
+                        <td class="right headers">N/A</td>
                     </tr>
                 </tbody>
             <?php } ?>

@@ -85,6 +85,7 @@ table {
     border-left: 1px solid #dddddd;
     border-right: 1px solid #dddddd;
     border-bottom: 1px solid #dddddd;
+    table-layout:fixed;
 }
 
 table thead, table tbody {
@@ -105,6 +106,9 @@ table td {
     vertical-align: top;
     border-top: 1px solid #ddd;
     transition: background-color 500ms linear;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div.main-content table td a {
@@ -116,6 +120,7 @@ table tr:hover td {
     background: #eeeeee;
     cursor: pointer;
     transition: background-color 1000ms linear;
+    white-space: nowrap;
 }
 
 table th.right, table td.right {
@@ -124,6 +129,35 @@ table th.right, table td.right {
 
 table th.center, table td.center {
     text-align: center;
+
+}
+
+table th.id, table td.id {
+    width: 75px;
+}
+
+table th.version, table td.version {
+    width: 54px;
+}
+
+table th.method, table td.method {
+    width: 85px;
+}
+
+table th.follow, table td.follow {
+    width: 50px;
+}
+
+table th.cookies, table td.cookies {
+    width: 60px;
+}
+
+table th.body, table td.body {
+    width: 50px;
+}
+
+table th.headers, table td.headers {
+    width: 59px;
 }
 
 form, div.main-content {
