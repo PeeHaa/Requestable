@@ -197,7 +197,7 @@ label.block {
     font-weight: normal;
 }
 
-input[type="text"], input[type="url"], select, textarea {
+input[type="text"], input[type="file"], input[type="url"], select, textarea {
     display: block;
     width: 100%;
     height: 34px;
@@ -216,6 +216,12 @@ input[type="text"], input[type="url"], select, textarea {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+input[type="file"] {
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 select {
