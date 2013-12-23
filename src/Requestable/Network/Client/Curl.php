@@ -151,7 +151,7 @@ class Curl implements Client
     {
         $options = [
             CURLOPT_SSL_VERIFYPEER => $this->verifyPeer,
-            CURLOPT_SSL_VERIFYHOST => $this->verifyHost ? 2 : 1,
+            CURLOPT_SSL_VERIFYHOST => $this->verifyHost ? 2 : false,
             CURLOPT_CAINFO         => __DIR__ . '/../../../../data/default.pem',
             CURLOPT_FAILONERROR    => false,
             CURLOPT_RETURNTRANSFER => true,
