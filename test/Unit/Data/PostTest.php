@@ -202,4 +202,101 @@ class PostTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('foo', $post->getBody());
     }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::verifyPeer
+     */
+    public function testVerifyPeerTrue()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue('true'));
+
+        $post = new Post($request);
+
+        $this->assertTrue($post->verifyPeer());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::verifyPeer
+     */
+    public function testVerifyPeerFalse()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue(null));
+
+        $post = new Post($request);
+
+        $this->assertFalse($post->verifyPeer());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::verifyHost
+     */
+    public function testVerifyHostTrue()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue('true'));
+
+        $post = new Post($request);
+
+        $this->assertTrue($post->verifyHost());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::verifyHost
+     */
+    public function testVerifyHostFalse()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue(null));
+
+        $post = new Post($request);
+
+        $this->assertFalse($post->verifyHost());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::getSslVersion
+     */
+    public function testGetSslVersionAutomaticWhenNotSet()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue(null));
+
+        $post = new Post($request);
+
+        $this->assertSame('automatic', $post->getSslVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::getSslVersion
+     */
+    public function testGetSslVersion()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->any())->method('post')->will($this->returnValue(3));
+
+        $post = new Post($request);
+
+        $this->assertSame(3, $post->getSslVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::getCaBundle
+     */
+    public function testGetCaBundle()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+
+        $post = new Post($request);
+
+        $this->assertNull($post->getCaBundle());
+    }
 }

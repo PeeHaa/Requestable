@@ -63,17 +63,21 @@ class Storer implements Storable
      */
     private function saveRequest()
     {
-        $query = 'INSERT INTO requests (uri, version, method, follow, cookies, body)';
-        $query.= ' VALUES (:uri, :version, :method, :follow, :cookies, :body)';
+        $query = 'INSERT INTO requests (uri, version, method, follow, cookies, body, verifypeer, verifyhost, sslversion, cabundle)';
+        $query.= ' VALUES (:uri, :version, :method, :follow, :cookies, :body, :verifypeer, :verifyhost, :sslversion, :cabundle)';
 
         $stmt = $this->dbConnection->prepare($query);
         $stmt->execute([
-            'uri'     => $this->request->getUri(),
-            'version' => $this->request->getVersion(),
-            'method'  => $this->request->getMethod(),
-            'follow'  => $this->request->redirectsEnabled() ? 't' : 'f',
-            'cookies' => $this->request->cookiesEnabled() ? 't' : 'f',
-            'body'    => $this->request->getBody(),
+            'uri'        => $this->request->getUri(),
+            'version'    => $this->request->getVersion(),
+            'method'     => $this->request->getMethod(),
+            'follow'     => $this->request->redirectsEnabled() ? 't' : 'f',
+            'cookies'    => $this->request->cookiesEnabled() ? 't' : 'f',
+            'body'       => $this->request->getBody(),
+            'verifypeer' => $this->request->verifyPeer() ? 't' : 'f',
+            'verifyhost' => $this->request->verifyHost() ? 't' : 'f',
+            'sslversion' => $this->request->getSslversion(),
+            'cabundle'   => $this->request->getCaBundle(),
         ]);
 
         return $this->dbConnection->lastInsertId('requests_id_seq');

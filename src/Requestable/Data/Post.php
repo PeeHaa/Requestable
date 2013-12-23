@@ -135,4 +135,57 @@ class Post implements Request
     {
         return $this->request->post('body');
     }
+
+    /**
+     * Gets whether to verify the peer's certificate.
+     *
+     * @return boolean Whether to verify the peer's certificate
+     */
+    public function verifyPeer()
+    {
+        if ($this->request->post('verifypeer')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Gets whether to check the existence of a common name and also verify that it matches the hostname provided
+     *
+     * @return boolean Whether to check the existence of a common name and also
+     *                 verify that it matches the hostname provided
+     */
+    public function verifyHost()
+    {
+        if ($this->request->post('verifyhost')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Gets the SSL version
+     *
+     * @return string|int The SSL version
+     */
+    public function getSslVersion()
+    {
+        if ($this->request->post('sslversion') === null) {
+            return 'automatic';
+        }
+
+        return $this->request->post('sslversion');
+    }
+
+    /**
+     * Gets the custom ca bundle
+     *
+     * @return null|string The custom ca bundle
+     */
+    public function getCaBundle()
+    {
+        return null;
+    }
 }

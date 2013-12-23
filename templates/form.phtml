@@ -25,7 +25,7 @@ if (in_array($requestData->getVersion(), ['1.0', '1.1'])) {
 <form action="/" method="post">
     <div class="form-group">
         <label>URI</label>
-        <input type="url" name="uri" placeholder="URI to which to make the request" value="<?php echo $requestData->getUri(); ?>">
+        <input type="url" name="uri" placeholder="URI to which to make the request" value="<?php echo htmlspecialchars($requestData->getUri(), ENT_QUOTES | ENT_SUBSTITUTE); ?>">
     </div>
     <div class="form-group">
         <label>HTTP version</label>
@@ -50,7 +50,7 @@ if (in_array($requestData->getVersion(), ['1.0', '1.1'])) {
     </div>
     <div class="form-group">
         <label>Custom method</label>
-        <input type="text" name="custommethod" placeholder="Don't fill when using one of the  default methods" value="<?php echo $customMethod; ?>">
+        <input type="text" name="custommethod" placeholder="Don't fill when using one of the  default methods" value="<?php echo htmlspecialchars($customMethod, ENT_QUOTES | ENT_SUBSTITUTE); ?>">
     </div>
     <div class="form-group">
         <label>Follow redirects</label>
@@ -62,11 +62,27 @@ if (in_array($requestData->getVersion(), ['1.0', '1.1'])) {
     </div>
     <div class="form-group">
         <label>Request headers (1 per line)</label>
-        <textarea name="headers" placeholder="Enter the headers of the request separated by a newline"><?php echo $renderedHeaders; ?></textarea>
+        <textarea name="headers" placeholder="Enter the headers of the request separated by a newline"><?php echo htmlspecialchars($renderedHeaders, ENT_QUOTES | ENT_SUBSTITUTE); ?></textarea>
     </div>
     <div class="form-group">
         <label>Request body</label>
-        <textarea name="body" placeholder="Enter the body of the request"><?php echo $requestData->getBody(); ?></textarea>
+        <textarea name="body" placeholder="Enter the body of the request"><?php echo htmlspecialchars($requestData->getBody(), ENT_QUOTES | ENT_SUBSTITUTE); ?></textarea>
+    </div>
+    <div class="form-group">
+        <label>SSL peer verification</label>
+        <label class="block"><input type="checkbox" name="verifypeer" <?php if ($requestData->verifyPeer()) echo 'checked="checked"'; ?> value="true"> Verifying the peer's certificate?</label>
+    </div>
+    <div class="form-group">
+        <label>SSL host verification</label>
+        <label class="block"><input type="checkbox" name="verifyhost" <?php if ($requestData->verifyHost()) echo 'checked="checked"'; ?> value="true"> Check the existence of a common name and also verify that it matches the hostname provided?</label>
+    </div>
+    <div class="form-group">
+        <label>SSL version</label>
+        <select name="sslversion">
+            <option value="automatic">Automatic</option>
+            <option value="2" <?php if ($requestData->getSslVersion() === '2') echo 'selected="selected"'; ?>>2</option>
+            <option value="3" <?php if ($requestData->getSslVersion() === '3') echo 'selected="selected"'; ?>>3</option>
+        </select>
     </div>
     <input type="submit" name="submit" value="Make request">
 </form>

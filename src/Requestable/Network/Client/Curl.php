@@ -62,19 +62,37 @@ class Curl implements Client
     private $body;
 
     /**
+     * @var boolean Do we need to verify the SSL peer
+     */
+    private $verifyPeer;
+
+    /**
+     * @var boolean Do we need to verify the SSL host
+     */
+    private $verifyHost;
+
+    /**
+     * @var string The SSL version
+     */
+    private $sslVersion;
+
+    /**
      * Creates instance
      *
      * @param \Requestable\Data\Request The form data
      */
     public function __construct(Request $request)
     {
-        $this->uri       = $request->getUri();
-        $this->version   = $request->getVersion();
-        $this->method    = $request->getMethod();
-        $this->redirects = $request->redirectsEnabled();
-        $this->cookies   = $request->cookiesEnabled();
-        $this->headers   = $request->getHeaders();
-        $this->body      = $request->getBody();
+        $this->uri        = $request->getUri();
+        $this->version    = $request->getVersion();
+        $this->method     = $request->getMethod();
+        $this->redirects  = $request->redirectsEnabled();
+        $this->cookies    = $request->cookiesEnabled();
+        $this->headers    = $request->getHeaders();
+        $this->body       = $request->getBody();
+        $this->verifyPeer = $request->verifyPeer();
+        $this->verifyHost = $request->verifyHost();
+        $this->sslVersion = $request->getSslVersion();
 
         if ($this->body) {
             $this->headers['content-length'] = [strlen($this->body)];
@@ -132,7 +150,9 @@ class Curl implements Client
     private function setOptions($client)
     {
         $options = [
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYPEER => $this->verifyPeer,
+            CURLOPT_SSL_VERIFYHOST => $this->verifyHost ? 2 : 1,
+            CURLOPT_CAINFO         => __DIR__ . '/../../../../data/default.pem',
             CURLOPT_FAILONERROR    => false,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER         => true,
@@ -141,6 +161,10 @@ class Curl implements Client
             CURLOPT_CUSTOMREQUEST  => $this->method,
             CURLOPT_HTTP_VERSION   => $this->version === '1.0' ? CURL_HTTP_VERSION_1_0 :  CURL_HTTP_VERSION_1_1,
         ];
+
+        if ($this->sslVersion !== 'automatic') {
+            $options[CURLOPT_SSLVERSION] = $this->sslVersion;
+        }
 
         if ($this->cookies) {
             $cookieJar = tempnam(sys_get_temp_dir(), 'Req');

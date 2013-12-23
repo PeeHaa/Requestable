@@ -202,4 +202,101 @@ class GetTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('foo', $get->getBody());
     }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::verifyPeer
+     */
+    public function testVerifyPeerTrue()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue('true'));
+
+        $get = new Get($request);
+
+        $this->assertTrue($get->verifyPeer());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::verifyPeer
+     */
+    public function testVerifyPeerFalse()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue(null));
+
+        $get = new Get($request);
+
+        $this->assertFalse($get->verifyPeer());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::verifyHost
+     */
+    public function testVerifyHostTrue()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue('true'));
+
+        $get = new Get($request);
+
+        $this->assertTrue($get->verifyHost());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::verifyHost
+     */
+    public function testVerifyHostFalse()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue(null));
+
+        $get = new Get($request);
+
+        $this->assertFalse($get->verifyHost());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::getSslVersion
+     */
+    public function testGetSslVersionAutomaticWhenNotSet()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue(null));
+
+        $get = new Get($request);
+
+        $this->assertSame('automatic', $get->getSslVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::getSslVersion
+     */
+    public function testGetSslVersion()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->any())->method('get')->will($this->returnValue(3));
+
+        $get = new Get($request);
+
+        $this->assertSame(3, $get->getSslVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::getCaBundle
+     */
+    public function testGetCaBundle()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+
+        $get = new Get($request);
+
+        $this->assertNull($get->getCaBundle());
+    }
 }

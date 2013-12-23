@@ -70,4 +70,33 @@ interface Request
      * @return string The body supplied by the user
      */
     public function getBody();
+
+    /**
+     * Gets whether to verify the peer's certificate.
+     *
+     * @return boolean Whether to verify the peer's certificate
+     */
+    public function verifyPeer();
+
+    /**
+     * Gets whether to check the existence of a common name and also verify that it matches the hostname provided
+     *
+     * @return boolean Whether to check the existence of a common name and also
+     *                 verify that it matches the hostname provided
+     */
+    public function verifyHost();
+
+    /**
+     * Gets the SSL version
+     *
+     * @return string|int The SSL version
+     */
+    public function getSslVersion();
+
+    /**
+     * Gets the custom ca bundle
+     *
+     * @return null|string The custom ca bundle
+     */
+    public function getCaBundle();
 }

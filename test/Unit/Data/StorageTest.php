@@ -144,4 +144,70 @@ class StorageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('foo', $storage->getBody());
     }
+
+    /**
+     * @covers Requestable\Data\Storage::__construct
+     * @covers Requestable\Data\Storage::verifyPeer
+     */
+    public function testVerifyPeerTrue()
+    {
+        $storage = new Storage([['verifypeer' => true]]);
+
+        $this->assertTrue($storage->verifyPeer());
+    }
+
+    /**
+     * @covers Requestable\Data\Storage::__construct
+     * @covers Requestable\Data\Storage::verifyPeer
+     */
+    public function testVerifyPeerFalse()
+    {
+        $storage = new Storage([['verifypeer' => false]]);
+
+        $this->assertFalse($storage->verifyPeer());
+    }
+
+    /**
+     * @covers Requestable\Data\Storage::__construct
+     * @covers Requestable\Data\Storage::verifyHost
+     */
+    public function testVerifyHostTrue()
+    {
+        $storage = new Storage([['verifyhost' => true]]);
+
+        $this->assertTrue($storage->verifyHost());
+    }
+
+    /**
+     * @covers Requestable\Data\Storage::__construct
+     * @covers Requestable\Data\Storage::verifyHost
+     */
+    public function testVerifyHostFalse()
+    {
+        $storage = new Storage([['verifyhost' => false]]);
+
+        $this->assertFalse($storage->verifyHost());
+    }
+
+    /**
+     * @covers Requestable\Data\Storage::__construct
+     * @covers Requestable\Data\Storage::getSslVersion
+     */
+    public function testGetSslVersion()
+    {
+        $storage = new Storage([['sslversion' => 'automatic']]);
+
+        $this->assertSame('automatic', $storage->getSslVersion());
+    }
+
+    /**
+     * @covers Requestable\Data\Storage::__construct
+     * @covers Requestable\Data\Storage::getCaBundle
+     */
+    public function testGetCaBundle()
+    {
+        $storage = new Storage([]);
+
+        $this->assertNull($storage->getCaBundle());
+    }
 }

@@ -117,4 +117,45 @@ class Storage implements Request
     {
         return $this->recordset[0]['body'];
     }
+
+    /**
+     * Gets whether to verify the peer's certificate.
+     *
+     * @return boolean Whether to verify the peer's certificate
+     */
+    public function verifyPeer()
+    {
+        return $this->recordset[0]['verifypeer'];
+    }
+
+    /**
+     * Gets whether to check the existence of a common name and also verify that it matches the hostname provided
+     *
+     * @return boolean Whether to check the existence of a common name and also
+     *                 verify that it matches the hostname provided
+     */
+    public function verifyHost()
+    {
+        return $this->recordset[0]['verifyhost'];
+    }
+
+    /**
+     * Gets the SSL version
+     *
+     * @return string|int The SSL version
+     */
+    public function getSslVersion()
+    {
+        return $this->recordset[0]['sslversion'];
+    }
+
+    /**
+     * Gets the custom ca bundle
+     *
+     * @return null|string The custom ca bundle
+     */
+    public function getCaBundle()
+    {
+        return null;
+    }
 }

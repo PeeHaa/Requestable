@@ -49,7 +49,8 @@ class Retriever implements Retrievable
     public function getRequest($id)
     {
         $query = 'SELECT requests.id, requests.uri, requests.version, requests.method, requests.follow,';
-        $query.= ' requests.cookies, requests.body, requestheaders.header';
+        $query.= ' requests.cookies, requests.body, requests.verifypeer, requests.verifyhost, requests.sslversion,';
+        $query.= ' requests.cabundle, requestheaders.header';
         $query.= ' FROM requests';
         $query.= ' LEFT JOIN requestheaders ON requestheaders.requestid = requests.id';
         $query.= ' WHERE requests.id = :id';
@@ -110,6 +111,10 @@ class Retriever implements Retrievable
             'requests.method',
             'requests.follow',
             'requests.cookies',
+            'requests.verifyPeer',
+            'requests.verifyHost',
+            'requests.sslVersion',
+            'requests.caBundle',
         ];
 
         return in_array($field, $validFields, true);
