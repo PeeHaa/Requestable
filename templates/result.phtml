@@ -4,11 +4,13 @@
     </div>
 <?php } else { ?>
     <?php foreach ($requestInfo['headers'] as $header) { ?>
-        <div class="result">
+        <div class="result <?php if (!trim($requestInfo['body'])) echo 'result-bottom'; ?>">
             <code><pre><?php echo htmlspecialchars($header, ENT_QUOTES | ENT_SUBSTITUTE); ?></pre></code>
         </div>
     <?php } ?>
-    <div class="result result-bottom">
-        <code><pre><?php echo htmlspecialchars($requestInfo['body'], ENT_QUOTES | ENT_SUBSTITUTE); ?></pre></code>
-    </div>
+    <?php if (trim($requestInfo['body'])) { ?>
+        <div class="result result-bottom">
+            <code><pre><?php echo htmlspecialchars($requestInfo['body'], ENT_QUOTES | ENT_SUBSTITUTE); ?></pre></code>
+        </div
+    <?php } ?>
 <?php } ?>
