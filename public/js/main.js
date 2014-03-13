@@ -93,4 +93,26 @@
             }
         });
     }
+
+    var toJson = document.querySelector('.result img.json');
+
+    if (toJson) {
+        var rawBody = document.querySelector('.result-bottom code pre');
+
+        $(toJson).on('click', function() {
+            if ($(toJson).hasClass('active')) {
+                document.querySelector('.pretty-json-container').parentNode.removeChild(document.querySelector('.pretty-json-container'));
+
+                rawBody.style.display = 'block';
+
+                $(toJson).removeClass('active');
+            } else {
+                document.querySelector('.result-bottom').appendChild(JSON.prettify(JSON.parse(rawBody.textContent)));
+
+                rawBody.style.display = 'none';
+
+                $(toJson).addClass('active');
+            }
+        });
+    }
 }());

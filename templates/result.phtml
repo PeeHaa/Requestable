@@ -10,6 +10,9 @@
     <?php } ?>
     <?php if (trim($requestInfo['body'])) { ?>
         <div class="result result-bottom">
+            <?php if (preg_match('#\nContent-Type: application/json\b#', $requestInfo['headers'][0]) === 1) { ?>
+                <img src="/style/json.png" class="json" title="Prettify JSON">
+            <?php } ?>
             <code><pre><?php echo htmlspecialchars($requestInfo['body'], ENT_QUOTES | ENT_SUBSTITUTE); ?></pre></code>
         </div
     <?php } ?>

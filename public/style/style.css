@@ -1,6 +1,43 @@
 /* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
 
+/* DaveRandom's JSON prettify - https://github.com/DaveRandom/json-prettifier */
+.pretty-json-container {
+    font-family: "Courier New", Courier, monospace;
+    white-space: pre;
+}
+.pretty-json-container span.value-string {
+    color: #0000FF;
+}
+.pretty-json-container span.value-string a {
+    color: #0060E0;
+    text-decoration: none;
+}
+.pretty-json-container span.value-string a:hover {
+    text-decoration: underline;
+}
+.pretty-json-container span.value-number {
+    color: #000080;
+}
+.pretty-json-container span.value-boolean {
+    color: #308014;
+}
+.pretty-json-container span.value-null {
+    color: #787878;
+}
+.pretty-json-container span.object-delimiter, .pretty-json-container span.enclosure-active {
+    cursor: default;
+    font-weight: bold;
+}
+.pretty-json-container span.array-enclosure {
+    cursor: default;
+    color: #C00080;
+}
+.pretty-json-container span.object-enclosure {
+    cursor: default;
+    color: #800000;
+}
+
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -280,11 +317,34 @@ input[type="submit"]:active {
     border: 1px solid #e1e1e8;
     border-top: 0;
     background: #dff0d8;
+    position: relative;
 }
 
 .result-bottom {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+}
+
+.result img.json {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 16px;
+    width: 24px;
+}
+
+.result img.json.active {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 16px;
+    width: 24px;
+}
+
+.result:hover img.json {
+    display: block;
 }
 
 .result.error {
