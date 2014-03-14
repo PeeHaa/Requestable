@@ -158,4 +158,18 @@ class Storage implements Request
     {
         return null;
     }
+
+    /**
+     * Gets the optional password to protect requests
+     *
+     * @return null|string The password to protect the request
+     */
+    public function getPassword()
+    {
+        if ($this->recordset[0]['protected']) {
+            return $this->recordset[0]['protected'];
+        }
+
+        return false;
+    }
 }

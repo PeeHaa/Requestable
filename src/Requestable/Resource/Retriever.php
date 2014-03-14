@@ -50,7 +50,7 @@ class Retriever implements Retrievable
     {
         $query = 'SELECT requests.id, requests.uri, requests.version, requests.method, requests.follow,';
         $query.= ' requests.cookies, requests.body, requests.verifypeer, requests.verifyhost, requests.sslversion,';
-        $query.= ' requests.cabundle, requestheaders.header';
+        $query.= ' requests.cabundle, requests.protected, requestheaders.header';
         $query.= ' FROM requests';
         $query.= ' LEFT JOIN requestheaders ON requestheaders.requestid = requests.id';
         $query.= ' WHERE requests.id = :id';
@@ -81,7 +81,7 @@ class Retriever implements Retrievable
         }
 
         $query = 'SELECT requests.id, requests.uri, requests.version, requests.method, requests.follow,';
-        $query.= ' requests.cookies, requests.body, requestheaders.header';
+        $query.= ' requests.cookies, requests.body, requests.protected, requestheaders.header';
         $query.= ' FROM requests';
         $query.= ' LEFT JOIN requestheaders ON requestheaders.requestid = requests.id';
         $query.= ' ORDER BY ' . $field . ' ' . $direction;
@@ -115,6 +115,7 @@ class Retriever implements Retrievable
             'requests.verifyHost',
             'requests.sslVersion',
             'requests.caBundle',
+            'requests.protected',
         ];
 
         return in_array($field, $validFields, true);

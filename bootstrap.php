@@ -22,10 +22,17 @@ use Requestable\Data\Get;
 use Requestable\Network\Client\Curl;
 use Requestable\Network\Client\Exception;
 
+session_start();
+
 /**
  * Bootstrap the Requestable library
  */
 require_once __DIR__ . '/src/Requestable/bootstrap.php';
+
+/**
+ * Load the password compat lib
+ */
+require_once __DIR__ . '/src/Requestable/Security/password_compat.php';
 
 /**
  * Load the environment specific settings
@@ -108,7 +115,17 @@ if ($request->getPath() === '/about') {
     $requestData = new Post($request);
     $storage     = new Storer($requestData, $dbConnection);
 
-    header('Location: ' . $request->getBaseUrl() . $apiPrefix .'/' . $identifier->toHash($storage->save()));
+    $hash = $identifier->toHash($storage->save());
+
+    if ($requestData->getPassword() !== null) {
+        if (!isset($_SESSION['authenticated_requests'])) {
+            $_SESSION['authenticated_requests'] = [];
+        }
+
+        $_SESSION['authenticated_requests'][] = $hash;
+    }
+
+    header('Location: ' . $request->getBaseUrl() . $apiPrefix .'/' . $hash);
     exit;
 } elseif ($request->get('uri') !== null) {
     $requestData = new Get($request);
@@ -116,6 +133,27 @@ if ($request->getPath() === '/about') {
 
     header('Location: ' . $request->getBaseUrl() . $apiPrefix .'/' . $identifier->toHash($storage->save()));
     exit;
+} elseif (preg_match('#^/\w+/authenticate$#', $request->getPath()) === 1 && $request->getMethod() === 'GET') {
+    ob_start();
+    require __DIR__ . '/templates/authenticate.phtml';
+    $content = ob_get_contents();
+    ob_end_clean();
+} elseif (preg_match('#^(/api)?/\w+/authenticate$#', $request->getPath()) === 1 && $request->getMethod() === 'POST') {
+    $path  = trim($request->getPath(), '/ ');
+    $parts = explode('/', $path);
+    $hash  = strpos($request->getPath(), '/api') === 0 ? $parts[1] : $parts[0];
+
+    $storage     = new Retriever($dbConnection);
+    $requestData = $storage->getRequest($identifier->toPlain($hash));
+
+    if (password_verify($request->post('password'), $requestData->getPassword())) {
+        $_SESSION['authenticated_requests'][] = $hash;
+
+        header('Location: ' . $request->getBaseUrl() . substr($request->getPath(), 0, -13));
+        exit;
+    }
+
+    header('Location: ' . $request->getBaseUrl() . $request->getPath());
 } elseif (!in_array($request->getPath(), ['', '/'], true)) {
     $path  = trim($request->getPath(), '/ ');
     $parts = explode('/', $path);
@@ -123,6 +161,10 @@ if ($request->getPath() === '/about') {
 
     $storage     = new Retriever($dbConnection);
     $requestData = $storage->getRequest($identifier->toPlain($hash));
+
+    if ($requestData->getPassword() && !in_array($hash, $_SESSION['authenticated_requests'], true)) {
+        header('Location: ' . $request->getBaseUrl() . rtrim($request->getPath(), '/') . '/authenticate');
+    }
 }
 
 /**

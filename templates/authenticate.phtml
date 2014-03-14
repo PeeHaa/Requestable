@@ -1,0 +1,11 @@
+<div class="main-content">
+    <h1>Authentication required</h1>
+    <p>You are trying to access a non public protected request. Fill in the password to see the request.</p>
+    <form action="<?php echo $request->getPath(); ?>" method="post">
+        <div class="form-group">
+            <label><img src="/style/lock.png" title="Private request" class="private"> Password</label>
+            <input type="password" name="password" placeholder="" value="">
+        </div>
+        <input type="submit" name="submit" value="Authenticate">
+    </form>
+</div>

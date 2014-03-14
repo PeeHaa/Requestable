@@ -41,7 +41,7 @@
     }
 
     var form = document.querySelector('form');
-    if (form) {
+    if (form && form.getAttribute('action') === '/') {
         $(form).on('submit', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -75,7 +75,7 @@
                     scrollTheThing(document.querySelector('.result'));
                 }
             }
-            xhr.open(form.getAttribute('method'), '/', true);
+            xhr.open(form.getAttribute('method'), form.getAttribute('action'), true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.send($(form).serialize());

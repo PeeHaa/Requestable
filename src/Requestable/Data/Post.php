@@ -188,4 +188,18 @@ class Post implements Request
     {
         return null;
     }
+
+    /**
+     * Gets the optional password to protect requests
+     *
+     * @return null|string The password to protect the request
+     */
+    public function getPassword()
+    {
+        if ($this->request->post('password') === '') {
+            return null;
+        }
+
+        return $this->request->post('password');
+    }
 }

@@ -188,4 +188,14 @@ class Get implements Request
     {
         return null;
     }
+
+    /**
+     * Gets the optional password to protect requests
+     *
+     * @return null|string The password to protect the request
+     */
+    public function getPassword()
+    {
+        return $this->request->get('password');
+    }
 }

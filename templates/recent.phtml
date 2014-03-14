@@ -18,20 +18,21 @@ $byteFormatter = new \Requestable\Format\Byte;
             </tr>
         </thead>
         <?php if ($recentRequests) { ?>
+            <tbody>
             <?php foreach ($recentRequests as $id => $storedRequest) { ?>
-                <tbody>
-                    <tr>
-                        <td class="id"><a href="/<?php echo $identifier->toHash($id); ?>"><?php echo $identifier->toHash($id); ?></a></td>
-                        <td title="<?php echo htmlspecialchars($storedRequest->getUri()); ?>"><?php echo htmlspecialchars($storedRequest->getUri()); ?></td>
-                        <td class="right version"><?php echo htmlspecialchars($storedRequest->getVersion(), ENT_QUOTES | ENT_SUBSTITUTE); ?></td>
-                        <td class="method"><?php echo htmlspecialchars($storedRequest->getMethod(), ENT_QUOTES | ENT_SUBSTITUTE); ?></td>
-                        <td class="center follow"><input type="checkbox" disabled <?php if ($storedRequest->redirectsEnabled()) echo 'checked'; ?>></td>
-                        <td class="center cookies"><input type="checkbox" disabled <?php if ($storedRequest->cookiesEnabled()) echo 'checked'; ?>></td>
-                        <td class="right body"><?php echo $byteFormatter->format(strlen($storedRequest->getBody())); ?></td>
-                        <td class="right headers">N/A</td>
-                    </tr>
-                </tbody>
+                <?php if ($storedRequest->getPassword()) continue; ?>
+                <tr>
+                    <td class="id"><a href="/<?php echo $identifier->toHash($id); ?>"><?php echo $identifier->toHash($id); ?></a></td>
+                    <td title="<?php echo htmlspecialchars($storedRequest->getUri()); ?>"><?php echo htmlspecialchars($storedRequest->getUri()); ?></td>
+                    <td class="right version"><?php echo htmlspecialchars($storedRequest->getVersion(), ENT_QUOTES | ENT_SUBSTITUTE); ?></td>
+                    <td class="method"><?php echo htmlspecialchars($storedRequest->getMethod(), ENT_QUOTES | ENT_SUBSTITUTE); ?></td>
+                    <td class="center follow"><input type="checkbox" disabled <?php if ($storedRequest->redirectsEnabled()) echo 'checked'; ?>></td>
+                    <td class="center cookies"><input type="checkbox" disabled <?php if ($storedRequest->cookiesEnabled()) echo 'checked'; ?>></td>
+                    <td class="right body"><?php echo $byteFormatter->format(strlen($storedRequest->getBody())); ?></td>
+                    <td class="right headers">N/A</td>
+                </tr>
             <?php } ?>
+            </tbody>
         <?php } ?>
     </table>
 </div>

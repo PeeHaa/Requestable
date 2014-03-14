@@ -63,8 +63,8 @@ class Storer implements Storable
      */
     private function saveRequest()
     {
-        $query = 'INSERT INTO requests (uri, version, method, follow, cookies, body, verifypeer, verifyhost, sslversion, cabundle)';
-        $query.= ' VALUES (:uri, :version, :method, :follow, :cookies, :body, :verifypeer, :verifyhost, :sslversion, :cabundle)';
+        $query = 'INSERT INTO requests (uri, version, method, follow, cookies, body, verifypeer, verifyhost, sslversion, cabundle, protected)';
+        $query.= ' VALUES (:uri, :version, :method, :follow, :cookies, :body, :verifypeer, :verifyhost, :sslversion, :cabundle, :protected)';
 
         $stmt = $this->dbConnection->prepare($query);
         $stmt->execute([
@@ -78,6 +78,7 @@ class Storer implements Storable
             'verifyhost' => $this->request->verifyHost() ? 't' : 'f',
             'sslversion' => $this->request->getSslversion(),
             'cabundle'   => $this->request->getCaBundle(),
+            'protected'  => password_hash($this->request->getPassword(), PASSWORD_DEFAULT, ['cost' => 14]),
         ]);
 
         return $this->dbConnection->lastInsertId('requests_id_seq');
