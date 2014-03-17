@@ -78,7 +78,7 @@ class Storer implements Storable
             'verifyhost' => $this->request->verifyHost() ? 't' : 'f',
             'sslversion' => $this->request->getSslversion(),
             'cabundle'   => $this->request->getCaBundle(),
-            'protected'  => password_hash($this->request->getPassword(), PASSWORD_DEFAULT, ['cost' => 14]),
+            'protected'  => $this->request->getPassword() ? password_hash($this->request->getPassword(), PASSWORD_DEFAULT, ['cost' => 14]) : null,
         ]);
 
         return $this->dbConnection->lastInsertId('requests_id_seq');
