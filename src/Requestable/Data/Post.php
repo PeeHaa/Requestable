@@ -46,7 +46,7 @@ class Post implements Request
      */
     public function getUri()
     {
-        return $this->request->post('uri');
+        return strtok($this->request->post('uri'), '#');
     }
 
     /**

@@ -42,6 +42,20 @@ class GetTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Requestable\Data\Get::__construct
+     * @covers Requestable\Data\Get::getUri
+     */
+    public function testGetUriStripsFragment()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('get')->will($this->returnValue('https://pieterhordijk.com/path#fragment'));
+
+        $get = new Get($request);
+
+        $this->assertSame('https://pieterhordijk.com/path', $get->getUri());
+    }
+
+    /**
+     * @covers Requestable\Data\Get::__construct
      * @covers Requestable\Data\Get::getVersion
      */
     public function testGetVersion()

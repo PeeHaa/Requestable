@@ -42,6 +42,20 @@ class PostTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Requestable\Data\Post::__construct
+     * @covers Requestable\Data\Post::getUri
+     */
+    public function testGetUriStripsFragment()
+    {
+        $request = $this->getMock('\\Requestable\\Network\\Http\\RequestData');
+        $request->expects($this->once())->method('post')->will($this->returnValue('https://pieterhordijk.com/path#fragment'));
+
+        $post = new Post($request);
+
+        $this->assertSame('https://pieterhordijk.com/path', $post->getUri());
+    }
+
+    /**
+     * @covers Requestable\Data\Post::__construct
      * @covers Requestable\Data\Post::getVersion
      */
     public function testGetVersion()

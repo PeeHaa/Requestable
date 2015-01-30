@@ -46,7 +46,7 @@ class Get implements Request
      */
     public function getUri()
     {
-        return $this->request->get('uri');
+        return strtok($this->request->get('uri'), '#');
     }
 
     /**
