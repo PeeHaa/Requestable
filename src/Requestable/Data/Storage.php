@@ -30,7 +30,7 @@ class Storage implements Request
     /**
      * Creates instance
      *
-     * @param array $data The recordset of the request
+     * @param array $recordset The recordset of the request
      */
     public function __construct(array $recordset)
     {
@@ -162,7 +162,7 @@ class Storage implements Request
     /**
      * Gets the optional password to protect requests
      *
-     * @return null|string The password to protect the request
+     * @return boolean|string The password to protect the request
      */
     public function getPassword()
     {
