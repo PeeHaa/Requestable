@@ -79,9 +79,12 @@ if (in_array($requestData->getVersion(), ['1.0', '1.1'])) {
     <div class="form-group">
         <label>SSL version</label>
         <select name="sslversion">
-            <option value="automatic">Automatic</option>
-            <option value="2" <?php if ($requestData->getSslVersion() === '2') echo 'selected="selected"'; ?>>2</option>
-            <option value="3" <?php if ($requestData->getSslVersion() === '3') echo 'selected="selected"'; ?>>3</option>
+            <option value="0">Automatic</option>
+            <option value="2" <?php if ($requestData->getSslVersion() === '2') echo 'selected="selected"'; ?>>SSL 2</option>
+            <option value="3" <?php if ($requestData->getSslVersion() === '3') echo 'selected="selected"'; ?>>SSL 3</option>
+            <option value="4" <?php if ($requestData->getSslVersion() === '4') echo 'selected="selected"'; ?>>TLS 1.0</option>
+            <option value="5" <?php if ($requestData->getSslVersion() === '5') echo 'selected="selected"'; ?>>TLS 1.1</option>
+            <option value="6" <?php if ($requestData->getSslVersion() === '6') echo 'selected="selected"'; ?>>TLS 1.2</option>
         </select>
     </div>
     <div class="form-group">
